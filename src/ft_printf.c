@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 10:04:08 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/16 10:38:29 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/17 14:56:26 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static void	ft_reset(t_var *id)
 	ft_strclr(id->fld_min);
 	id->dot = 0;
 	ft_strclr(id->prec);
+	id->prec[0] = '0';
 	ft_strclr(id->type_spec);
 	id->type = 0;
 }

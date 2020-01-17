@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 10:32:26 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/16 12:24:44 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/17 14:12:07 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_ftoa(long double fl, int pr);
 void	ft_int_print(t_var *id, va_list args);
 void	ft_uint_print(t_var *id, va_list args);
 void	ft_base_print(t_var *id, va_list args);
-char	*ft_base(unsigned long long value, char type);
+char	*ft_base(unsigned long long value, t_var *id);
 void	ft_addr_print(t_var *id, va_list args);
 void	ft_char_print(t_var *id, va_list args);
 char	*ft_sdec_flags(t_var *id, char *str);

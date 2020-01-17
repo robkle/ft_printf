@@ -6,7 +6,7 @@
 /*   By: rklein <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 14:19:50 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/15 17:36:49 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/17 16:43:19 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*ft_strmake(char c, int size)
 	char	*s;
 	int		i;
 
+	size = size < 0 ? 0 : size;
 	if (!(s = (char*)malloc(sizeof(*s) * (size + 1))))
 		return (NULL);
 	i = 0;

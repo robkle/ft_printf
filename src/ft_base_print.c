@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 10:17:06 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/16 10:57:22 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/17 17:19:14 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,28 @@ void	ft_addr_print(t_var *id, va_list args)
 	free(str[2]);
 }
 
-char	*ft_base(unsigned long long value, char type)
+char	*ft_base(unsigned long long value, t_var *id)
 {
 	char	*str;
 	int		i;
 
-	if (type == 'b')
+	if (value == 0 && id->dot && ft_strchr_int(id->prec, '0'))
+		str = ft_strnew(0);
+	else if (id->type == 'b')
 		str = ft_itoa_base(value, 2);
-	if (type == 'o')
+	else if (id->type == 'o')
 		str = ft_itoa_base(value, 8);
-	if (type == 'x' || type == 'X')
+	else if (id->type == 'x' || id->type == 'X')
 	{
 		str = ft_itoa_base(value, 16);
-		if (type == 'X') 
+		if (id->type == 'X') 
 		{	
 			i = -1;
 			while (str[++i])
 				str[i] = ft_toupper(str[i]);
 		}
 	}
+	else
+		str = NULL;
 	return (str);
 }

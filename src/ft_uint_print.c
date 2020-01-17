@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 10:17:22 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/15 16:20:31 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/17 14:49:51 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,17 @@ void	ft_uint_print(t_var *id, va_list args)
 	if (ft_strcmp(id->type_spec, "l") == 0)
 	{
 		l_value = va_arg(args, unsigned long);
-		str[0] = (id->type == 'u') ? ft_u_itoa(l_value) : ft_base(l_value, id->type);
+		str[0] = (id->type == 'u') ? ft_u_itoa(l_value) : ft_base(l_value, id);
 	}
 	else if (ft_strcmp(id->type_spec, "ll") == 0)
 	{
 		ll_value = va_arg(args, unsigned long long);
-		str[0] = (id->type == 'u') ? ft_u_itoa(ll_value) : ft_base(ll_value, id->type);
+		str[0] = (id->type == 'u') ? ft_u_itoa(ll_value) : ft_base(ll_value, id);
 	}
 	else
 	{
 		value = va_arg(args, unsigned int); //short int is promoted to int when passed as va_arg
-		str[0] = (id->type == 'u') ? ft_u_itoa(value) : ft_base(value, id->type);
+		str[0] = (id->type == 'u') ? ft_u_itoa(value) : ft_base(value, id);
 	}
 	str[1] = ft_uint_flags(id, str[0]);
 	ft_putstr(str[1]);
