@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 10:32:26 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/17 14:12:07 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/20 14:05:29 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 typedef	struct	s_var
 {
+	char	sign[1];
 	char	flags[6];
 	char	fld_min[11];
 	_Bool	dot;
@@ -59,6 +60,7 @@ char	*ft_strdup(const char *src);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *str);
 char	*ft_strnew(size_t size);
+char	*ft_strsub(char const *s, unsigned int start, size_t len);
 int		ft_toupper(int c);
 
 #endif

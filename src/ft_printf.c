@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 10:04:08 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/17 14:56:26 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/20 16:28:10 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static t_var	*ft_idalloc(void)
 
 static void	ft_reset(t_var *id)
 {
+	id->sign[0] = '+';
 	ft_strclr(id->flags);
 	ft_strclr(id->fld_min);
 	id->dot = 0;
