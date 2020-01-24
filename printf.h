@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 10:32:26 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/20 14:05:29 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/24 14:07:32 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ void	ft_base_print(t_var *id, va_list args);
 char	*ft_base(unsigned long long value, t_var *id);
 void	ft_addr_print(t_var *id, va_list args);
 void	ft_char_print(t_var *id, va_list args);
-char	*ft_sdec_flags(t_var *id, char *str);
 int		ft_strchr_int(char *s, int c);
+char	*ft_double_flags(t_var *id, char *str);
+char	*ft_int_flags(t_var *id, char *str);
 char	*ft_strmake(char c, int size);
 char	*ft_spacepad(t_var *id, char *str);
 char	*ft_uint_flags(t_var *id, char *str);

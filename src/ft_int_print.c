@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 10:16:47 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/20 16:40:18 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/24 17:10:06 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	ft_int_print(t_var *id, va_list args)
 		value = va_arg(args, int); //short int is promoted to int when passed as va_arg
 		str[0] = ft_s_itoa(id, value);
 	}
-	str[1] = ft_sdec_flags(id, str[0]);
+	str[1] = ft_int_flags(id, str[0]);
 	ft_putstr(str[1]);
 	id->count += ft_strlen(str[1]);
 	free(str[1]);

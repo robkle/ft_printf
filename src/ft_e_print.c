@@ -69,7 +69,7 @@ void	ft_e_print(t_var *id, va_list args)
 		d = va_arg(args, double);
 		str[0] = ft_enum(id, d);
 	}
-	str[1] = ft_sdec_flags(id, str[0]);
+	str[1] = ft_double_flags(id, str[0]);
 	ft_putstr(str[1]);
 	id->count += ft_strlen(str[1]);
 	free(str[1]);

@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 14:03:25 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/15 11:01:06 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/24 17:20:18 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char		*ft_ftoa(long double fl, int pr)
 	int		len;
 
 	dec = ft_dec(pr);
-	fl = fl + (5.0 / (dec * 10));
+	fl = (fl >= 0) ? fl + (5.0 / (dec * 10)) : fl - (5.0 / (dec * 10));
 	len = (pr == 0 ? ft_intl(fl) + pr : ft_intl(fl) + pr + 1);
 	str = ft_strnew(len);
 	if ((num = fl * dec) < 0)
@@ -108,7 +108,7 @@ void			ft_double_print(t_var *id, va_list args)
 	else
 		str[1] = ft_strdup(str[0]);
 	free(str[0]);
-	str[2] = ft_sdec_flags(id, str[1]);
+	str[2] = ft_double_flags(id, str[1]);
 	ft_putstr(str[2]);
 	id->count += ft_strlen(str[2]);
 	free(str[2]);

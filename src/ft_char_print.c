@@ -6,22 +6,30 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 12:34:56 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/20 12:01:44 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/24 17:10:10 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 #include <stdio.h>
 
-static char	*ft_char_to_str(char c)
+static void	ft_char(t_var *id, char c)
 {
-	char	*str;
+	char	*spad;
 	
-	if (!(str = (char*)malloc(sizeof(*str) + 1)))
-		return (NULL);
-	str[0] = c;
-	str[1] = '\0';
-	return (str);
+	spad = ft_strmake(' ', ft_atoi(id->fld_min) - 1);
+	if (ft_strchr_int(id->flags, '-'))
+	{
+		write(1, &c, 1);
+		ft_putstr(spad);
+	}
+	else
+	{
+		ft_putstr(spad);
+		write(1, &c, 1);
+	}
+	id->count += ft_strlen(spad) + 1;
+	free(spad);
 }
 
 static char	*ft_str_flags(t_var *id, char *str)
@@ -51,11 +59,11 @@ void	ft_char_print(t_var *id, va_list args)
 	char	*str[2];
 
 	if (id->type == '%')
-		str[0] = ft_char_to_str('%');
+		ft_char(id, '%');
 	else if (id->type == 'c')
 	{
 		c = va_arg(args, int);
-		str[0] = ft_char_to_str(c);
+		ft_char(id, c);
 	}
 	else if (id->type == 's')
 	{
@@ -64,9 +72,9 @@ void	ft_char_print(t_var *id, va_list args)
 			str[0] = ft_strdup("(null)");
 		else
 			str[0] = ft_strdup(tmp);
+		str[1] = ft_str_flags(id, str[0]);
+		ft_putstr(str[1]);
+		id->count += ft_strlen(str[1]);
+		free(str[1]);
 	}
-	str[1] = ft_str_flags(id, str[0]);
-	ft_putstr(str[1]);
-	id->count += ft_strlen(str[1]);
-	free(str[1]);
 }
