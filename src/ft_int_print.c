@@ -6,12 +6,11 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 10:16:47 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/24 17:10:06 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/25 15:47:17 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
-#include <stdio.h>
 
 static int	ft_numlen(long long n)
 {
@@ -61,6 +60,28 @@ static char	*ft_s_itoa(t_var *id, long long n)
 
 void	ft_int_print(t_var *id, va_list args)
 {
+	intmax_t	value;
+	char		*str[2];
+
+	if (ft_strcmp(id->type_spec, "l") == 0)
+		value = (long int)va_arg(args, intmax_t);
+	else if (ft_strcmp(id->type_spec, "ll") == 0)
+		value = (long long int)va_arg(args, intmax_t);
+	else if (ft_strcmp(id->type_spec, "h") == 0)
+		value = (short int)va_arg(args, intmax_t);
+	else if (ft_strcmp(id->type_spec, "hh") == 0)
+		value = (char)va_arg(args, intmax_t);
+	else
+		value = (int)va_arg(args, intmax_t);
+	str[0] = ft_s_itoa(id, value);
+	str[1] = ft_int_flags(id, str[0]);
+	ft_putstr(str[1]);
+	id->count += ft_strlen(str[1]);
+	free(str[1]);
+}
+
+/*void	ft_int_print(t_var *id, va_list args)
+{
 	int			value;
 	long		l_value;
 	long long	ll_value;
@@ -85,4 +106,4 @@ void	ft_int_print(t_var *id, va_list args)
 	ft_putstr(str[1]);
 	id->count += ft_strlen(str[1]);
 	free(str[1]);
-}
+}*/

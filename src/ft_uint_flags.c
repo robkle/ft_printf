@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 12:38:21 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/24 17:10:29 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/25 17:07:08 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*ft_b_prefix(t_var *id, char *str)
 
 static char	*ft_prefix(t_var *id, char *str)
 {
-	if (ft_strcmp(str, "0") != 0)
+	if (ft_atoi(str) != 0)
 	{
 		if (id->type == 'b')
 			return (ft_b_prefix(id, str));
@@ -37,9 +37,9 @@ static char	*ft_prefix(t_var *id, char *str)
 			return (ft_strdup("0x"));
 		if (id->type == 'X')
 			return (ft_strdup("0X"));
-		if (id->type =='o')
-			return (ft_strdup("0"));
 	}
+	if (id->type =='o')
+			return (ft_strdup("0"));
 	return (ft_strnew(0));
 }
 
@@ -74,26 +74,26 @@ char	*ft_uint_flags(t_var *id, char *str)
 	char	*tmp[3];
 	int		size;
 
+	size = ft_strlen(str); 
+	if (ft_strchr_int(id->flags, '#') && id->type != 'u')
+	{
+		tmp[0] = ft_prefix(id, str);
+		size += ft_strlen(tmp[0]);
+	}
 	if (ft_strlen(str) != 0)
 	{
-		size = ft_strlen(str); 
-		if (ft_strchr_int(id->flags, '#') && id->type != 'u')
-		{
-			tmp[0] = ft_prefix(id, str);
-			size += ft_strlen(tmp[0]);
-		}
 		tmp[1] = ft_zpad_uint(id, &size);
 		tmp[2] = ft_strjoin(tmp[1], str);
 		free(tmp[1]);
 		free(str);
 		str = tmp[2];
-		if (ft_strchr_int(id->flags, '#') && id->type != 'u')
-		{
-			tmp[2] = ft_strjoin(tmp[0], str);
-			free (tmp[0]);
-			free(str);
-			str = tmp[2];
-		}
+	}
+	if (ft_strchr_int(id->flags, '#') && id->type != 'u')
+	{
+		tmp[2] = ft_strjoin(tmp[0], str);
+		free (tmp[0]);
+		free(str);
+		str = tmp[2];
 	}
 	return (ft_spad_uint(id, str));
 }
