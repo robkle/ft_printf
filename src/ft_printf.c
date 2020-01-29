@@ -6,12 +6,23 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 10:04:08 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/20 16:28:10 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/29 14:43:46 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 #include <stdio.h> //REMOVE
+
+static int	ft_valid_type(char c)
+{
+	if (c >= 'b' && c <= 'g')
+		return (1);
+	if (ft_toupper(c) == 'E' || ft_toupper(c) == 'G' || ft_toupper(c) == 'X')
+		return (1);
+	if (c == 'i' || c == 'o' || c == 'p' || c == 's' || c == 'u' || c == '%')
+		return (1);
+	return (0);
+}
 
 static int	ft_read_id(t_var *id, const char *str)
 {
@@ -42,6 +53,8 @@ static int	ft_read_id(t_var *id, const char *str)
 			id->type_spec[x++] = str[i++];
 	}
 	id->type = str[i++];
+	if (!ft_valid_type(id->type))
+		return (0);
 	return (i);
 }
 
@@ -83,8 +96,6 @@ static void	ft_direct(t_var *id, va_list args)
 		ft_e_print(id, args);
 	else if (ft_toupper(id->type) == 'G')
 		ft_g_print(id, args);
-	/*else // INVALID IDENTIFIER
-		exit ;*/
 }
 
 int		ft_printf(const char *format, ...)
@@ -101,7 +112,7 @@ int		ft_printf(const char *format, ...)
 		ft_reset(id);
 		if (format[i] == '%')
 		{
-			i = i + ft_read_id(id, &format[i + 1]);
+			i = i + ft_read_id(id, &format[i + 1]);//problem with % may lie here
 			ft_direct(id, args);
 		}
 		else

@@ -6,17 +6,17 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 10:17:06 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/24 17:10:34 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/29 14:44:52 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-static char	*ft_itoa_base(unsigned long long value, int base)
+static char	*ft_itoa_base(uintmax_t value, int base)
 {
-	char			*base_char;
-	char			*str;
-	unsigned long long	tmp;
+	char		*base_char;
+	char		*str;
+	uintmax_t	tmp;
 	int			len;
 	
 	base_char = "0123456789abcdef";
@@ -37,13 +37,13 @@ static char	*ft_itoa_base(unsigned long long value, int base)
 
 void	ft_addr_print(t_var *id, va_list args)
 {
-	void				*ar;
-	unsigned long long	value;
-	char				*str[3];
+	void		*ar;
+	uintmax_t	value;
+	char		*str[3];
 
 	ar = va_arg(args, void*);
-	value = (unsigned long long)ar;
-	str[0] = ft_itoa_base(value, 16);
+	value = (uintmax_t)ar;
+	str[0] = (value != 0 && ft_atoi(id->prec) != 0) ? ft_itoa_base(value, 16) : ft_strnew(0);
 	str[1] = ft_strjoin("0x", str[0]);
 	if ((size_t)ft_atoi(id->fld_min) > ft_strlen(str[1]))
 		str[2] = ft_spacepad(id, str[1]);
@@ -56,7 +56,7 @@ void	ft_addr_print(t_var *id, va_list args)
 	free(str[2]);
 }
 
-char	*ft_base(unsigned long long value, t_var *id)
+char	*ft_base(uintmax_t value, t_var *id)
 {
 	char	*str;
 	int		i;

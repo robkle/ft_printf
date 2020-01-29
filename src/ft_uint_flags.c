@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 12:38:21 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/25 17:07:08 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/29 12:49:46 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*ft_b_prefix(t_var *id, char *str)
 
 static char	*ft_prefix(t_var *id, char *str)
 {
-	if (ft_atoi(str) != 0)
+	if (ft_strlen(str) != 0 && !(ft_strlen(str) == 1 && str[0] == '0'))
 	{
 		if (id->type == 'b')
 			return (ft_b_prefix(id, str));
@@ -38,12 +38,12 @@ static char	*ft_prefix(t_var *id, char *str)
 		if (id->type == 'X')
 			return (ft_strdup("0X"));
 	}
-	if (id->type =='o')
+	if (id->type =='o' && !(ft_strlen(str) == 1 && str[0] == '0'))
 			return (ft_strdup("0"));
 	return (ft_strnew(0));
 }
 
-static char	*ft_spad_uint(t_var *id, char *str)
+char	*ft_spad_uint(t_var *id, char *str)
 {
 	char	*tmp;
 
@@ -90,10 +90,10 @@ char	*ft_uint_flags(t_var *id, char *str)
 	}
 	if (ft_strchr_int(id->flags, '#') && id->type != 'u')
 	{
-		tmp[2] = ft_strjoin(tmp[0], str);
+		tmp[1] = ft_strjoin(tmp[0], str);
 		free (tmp[0]);
 		free(str);
-		str = tmp[2];
+		str = tmp[1];
 	}
 	return (ft_spad_uint(id, str));
 }

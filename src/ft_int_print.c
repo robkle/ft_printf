@@ -6,13 +6,13 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 10:16:47 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/25 15:47:17 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/27 16:46:26 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-static int	ft_numlen(long long n)
+static int	ft_numlen(intmax_t n)
 {
 	int	len;
 
@@ -29,7 +29,7 @@ static int	ft_numlen(long long n)
 	return (len);
 }
 
-static char	*ft_s_itoa(t_var *id, long long n)
+static char	*ft_s_itoa(t_var *id, intmax_t n)
 {
 	int	i;
 	char	*str;

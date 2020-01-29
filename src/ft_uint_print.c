@@ -6,13 +6,13 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 10:17:22 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/25 16:52:01 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/29 12:49:52 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-static int	ft_u_numlen(unsigned long long n)
+static int	ft_u_numlen(uintmax_t n)
 {
 	int	len;
 
@@ -27,9 +27,9 @@ static int	ft_u_numlen(unsigned long long n)
 	return (len);
 }
 
-static char	*ft_u_itoa(unsigned long long n)
+static char	*ft_u_itoa(uintmax_t n)
 {
-	int	i;
+	int		i;
 	char	*str;
 
 	i = ft_u_numlen(n);
@@ -50,27 +50,24 @@ static char	*ft_u_itoa(unsigned long long n)
 
 void	ft_uint_print(t_var *id, va_list args)
 {
-	unsigned int		value;
-	unsigned long		l_value;
-	unsigned long long	ll_value;
-	char				*str[2];
+	uintmax_t	value;
+	char		*str[2];
 
 	if (ft_strcmp(id->type_spec, "l") == 0)
-	{
-		l_value = va_arg(args, unsigned long);
-		str[0] = (id->type == 'u') ? ft_u_itoa(l_value) : ft_base(l_value, id);
-	}
+		value = (unsigned long int)va_arg(args, uintmax_t);
 	else if (ft_strcmp(id->type_spec, "ll") == 0)
-	{
-		ll_value = va_arg(args, unsigned long long);
-		str[0] = (id->type == 'u') ? ft_u_itoa(ll_value) : ft_base(ll_value, id);
-	}
+		value = (unsigned long long)va_arg(args, uintmax_t);
+	else if (ft_strcmp(id->type_spec, "h") == 0)
+		value = (unsigned short int)va_arg(args, uintmax_t);
+	else if (ft_strcmp(id->type_spec, "hh") == 0)
+		value = (unsigned char)va_arg(args, uintmax_t);
 	else
-	{
-		value = va_arg(args, unsigned int); //short int is promoted to int when passed as va_arg
-		str[0] = (id->type == 'u') ? ft_u_itoa(value) : ft_base(value, id);
-	}
-	str[1] = ft_uint_flags(id, str[0]);
+		value = (unsigned int)va_arg(args, uintmax_t);
+	str[0] = (id->type == 'u') ? ft_u_itoa(value) : ft_base(value, id);
+	if (id->type == 'u' && value == 0 && id->dot && ft_strchr_int(id->prec, '0'))
+		str[1] = ft_spad_uint(id, ft_strnew(0));
+	else
+		str[1] = ft_uint_flags(id, str[0]);
 	ft_putstr(str[1]);
 	id->count += ft_strlen(str[1]);
 	free(str[1]);
