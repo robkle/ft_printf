@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 12:38:21 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/29 12:49:46 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/30 15:05:25 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,17 @@ char	*ft_spad_uint(t_var *id, char *str)
 	return (tmp);
 }
 
-static char	*ft_zpad_uint(t_var *id, int *size)
-{
+char	*ft_zpad_uint(t_var *id, int size)
+{	
 	if (ft_strchr_int(id->flags, '0') && !ft_strchr_int(id->flags, '-')
 			&& !id->dot)
-		return (ft_strmake('0', ft_atoi(id->fld_min) - *size));
+		return (ft_strmake('0', ft_atoi(id->fld_min) - size));
 	if (id->dot)
-		return (ft_strmake('0', ft_atoi(id->prec) - *size));
+	{
+		if (ft_toupper(id->type) == 'X' && ft_strchr_int(id->flags, '#'))
+			size = size - 2;
+		return (ft_strmake('0', ft_atoi(id->prec) - size));
+	}
 	return (ft_strnew(0));
 }
 
@@ -82,7 +86,7 @@ char	*ft_uint_flags(t_var *id, char *str)
 	}
 	if (ft_strlen(str) != 0)
 	{
-		tmp[1] = ft_zpad_uint(id, &size);
+		tmp[1] = ft_zpad_uint(id, size);
 		tmp[2] = ft_strjoin(tmp[1], str);
 		free(tmp[1]);
 		free(str);

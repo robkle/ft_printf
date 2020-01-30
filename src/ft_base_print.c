@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 10:17:06 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/29 14:44:52 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/30 12:21:54 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,22 @@ void	ft_addr_print(t_var *id, va_list args)
 
 	ar = va_arg(args, void*);
 	value = (uintmax_t)ar;
-	str[0] = (value != 0 && ft_atoi(id->prec) != 0) ? ft_itoa_base(value, 16) : ft_strnew(0);
-	str[1] = ft_strjoin("0x", str[0]);
-	if ((size_t)ft_atoi(id->fld_min) > ft_strlen(str[1]))
-		str[2] = ft_spacepad(id, str[1]);
-	else
-		str[2] = ft_strdup(str[1]);
-	ft_putstr(str[2]);
-	id->count += ft_strlen(str[2]);
+	str[0] = value == 0 && id->dot && ft_strchr_int(id->prec, '0') ?
+		ft_strnew(0) : ft_itoa_base(value, 16);
+	str[1] = ft_zpad_uint(id, ft_strlen(str[0]));
+	str[2] = ft_strjoin(str[1], str[0]);
 	free(str[0]);
 	free(str[1]);
+	str[0] = ft_strjoin("0x", str[2]);
 	free(str[2]);
+	if ((size_t)ft_atoi(id->fld_min) > ft_strlen(str[0]))
+		str[1] = ft_spacepad(id, str[0]);
+	else
+		str[1] = ft_strdup(str[0]);
+	ft_putstr(str[1]);
+	id->count += ft_strlen(str[1]);
+	free(str[0]);
+	free(str[1]);
 }
 
 char	*ft_base(uintmax_t value, t_var *id)

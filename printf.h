@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 10:32:26 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/29 14:44:53 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/30 15:05:23 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdint.h>
 # include <inttypes.h>
 # include <stdbool.h>
+# include <limits.h>
 
 typedef	struct	s_var
 {
@@ -41,6 +42,7 @@ char    *ft_spad_uint(t_var *id, char *str);
 void	ft_base_print(t_var *id, va_list args);
 char	*ft_base(uintmax_t value, t_var *id);
 void	ft_addr_print(t_var *id, va_list args);
+char 	*ft_zpad_uint(t_var *id, int size);
 void	ft_char_print(t_var *id, va_list args);
 int		ft_strchr_int(char *s, int c);
 char	*ft_double_flags(t_var *id, char *str);
