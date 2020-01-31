@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 10:04:08 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/29 14:43:46 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/31 12:41:02 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,16 @@ static t_var	*ft_idalloc(void)
 	if(!(id = malloc(sizeof(t_var))))
 		return (NULL);
 	id->count = 0;
+	id->flags = ft_strnew(6);
+	id->fld_min = ft_strnew(11);
+	id->prec = ft_strnew(3);
+	id->type_spec = ft_strnew(3);
 	return (id);
 }
 
 static void	ft_reset(t_var *id)
 {
-	id->sign[0] = '+';
+	id->sign = '+';
 	ft_strclr(id->flags);
 	ft_strclr(id->fld_min);
 	id->dot = 0;

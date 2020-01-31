@@ -40,7 +40,7 @@ static char	*ft_enum(t_var *id, long double f)
 	sign = ((f < 1.0 && f > 0.0) || (f > -1.0 && f < 0.0)) ? '-' : '+';
 	e = 0;
 	f = ft_epower(f, &e);
-	str[0] = ft_ftoa(f, pr);
+	str[0] = ft_ftoa(id,f, pr);
 	if (pr == 0 && ft_strchr_int(id->flags, '#'))
 		str[1] = ft_strjoin(str[0], ".");
 	else

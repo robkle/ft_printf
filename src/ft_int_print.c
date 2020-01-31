@@ -6,11 +6,12 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 10:16:47 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/27 16:46:26 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/31 17:08:26 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
+#include <stdio.h>
 
 static int	ft_numlen(intmax_t n)
 {
@@ -29,14 +30,14 @@ static int	ft_numlen(intmax_t n)
 	return (len);
 }
 
-static char	*ft_s_itoa(t_var *id, intmax_t n)
+char	*ft_s_itoa(t_var *id, intmax_t n)
 {
 	int	i;
 	char	*str;
 
 	if (n == -9223372036854775807 - 1)
 	{
-		id->sign[0] = '-';
+		id->sign = '-';
 		return (ft_strdup("9223372036854775808"));
 	}
 	i = ft_numlen(n);
@@ -45,7 +46,7 @@ static char	*ft_s_itoa(t_var *id, intmax_t n)
 	str[i--] = '\0';
 	if (n < 0)
 	{
-		id->sign[0] = '-';
+		id->sign = '-';
 		n = n * -1;
 	}
 	if (n == 0)

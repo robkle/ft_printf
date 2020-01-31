@@ -6,7 +6,7 @@
 /*   By: rklein <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 14:19:50 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/17 16:43:19 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/31 12:44:47 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@ int		ft_free_id(t_var *id)
 	int	count;
 
 	count = id->count;
+	free(id->flags);
+	free(id->fld_min);
+	free(id->prec);
+	free(id->type_spec);
 	free(id);
 	return (count);
 }

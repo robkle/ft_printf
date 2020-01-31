@@ -46,7 +46,7 @@ static char	*ft_enum_g(t_var *id, long double f, int pr)
 			f = f / 10;
 		e++;
 	}
-	str[0] = ft_ftoa(f, pr);
+	str[0] = ft_ftoa(id, f, pr);
 	if (pr == 0 && ft_strchr_int(id->flags, '#'))
 		str[1] = ft_strjoin(str[0], ".");
 	else
@@ -72,7 +72,7 @@ static char	*ft_g_direct(t_var *id, long double fl)
 	sn = pr - ft_sdigits(fl);
 	if (sn >= 0)
 	{
-		str[1] = ft_ftoa(fl, sn);
+		str[1] = ft_ftoa(id, fl, sn);
 		if (sn == 0 && ft_strchr_int(id->flags, '#'))
 			str[2] = ft_strjoin(str[1], ".");
 		else

@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 12:16:05 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/27 16:46:25 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/31 17:51:23 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ static char	*ft_zeropad(t_var *id, int size)
 	}*/
 }
 
-static char	*ft_addsign(t_var *id, char *str)
+char	*ft_addsign(t_var *id, char *str)
 {
 	char *sstr;
-	if (id->sign[0] == '-')
+	if (id->sign == '-')
 	   sstr = ft_strjoin("-", str);
-	else if (id->sign[0] == '+' && (ft_strchr_int(id->flags, '+')))
+	else if (id->sign == '+' && (ft_strchr_int(id->flags, '+')))
 		sstr = ft_strjoin("+", str);
-	else if (id->sign[0] == '+' && (ft_strchr_int(id->flags, ' ')))
+	else if (id->sign == '+' && (ft_strchr_int(id->flags, ' ')))
 		sstr = ft_strjoin(" ", str);
 	else
 		sstr = ft_strdup(str);
@@ -103,7 +103,7 @@ char	*ft_int_flags(t_var *id, char *str)
 	else
 	{
 		size = ft_strlen(str);
-		if (id->type != 'u' && !id->dot && (id->sign[0] == '-' || ft_strchr_int(id->flags, '+') || 
+		if (id->type != 'u' && !id->dot && (id->sign == '-' || ft_strchr_int(id->flags, '+') || 
 					ft_strchr_int(id->flags, ' ')) && ft_strchr_int(id->flags, '0'))
 			size++;
 		tmp[0] = ft_zeropad(id, size);

@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 10:32:26 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/30 15:05:23 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/31 17:19:32 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
 
 typedef	struct	s_var
 {
-	char	sign[1];
-	char	flags[6];
-	char	fld_min[11];
+	char	sign;
+	char	*flags;
+	char	*fld_min;
 	_Bool	dot;
-	char	prec[3];
-	char	type_spec[3];
+	char	*prec;
+	char	*type_spec;
 	char	type;
 	int	count;
 }		t_var;
@@ -35,8 +35,10 @@ typedef	struct	s_var
 /*MAIN FUNCTIONS*/
 int		ft_printf(const char *format, ...);
 void	ft_double_print(t_var *id, va_list args);
-char	*ft_ftoa(long double fl, int pr);
+char	*ft_ftoa(t_var *id, long double fl, int pr);
 void	ft_int_print(t_var *id, va_list args);
+char	*ft_addsign(t_var *id, char *str);
+char	*ft_s_itoa(t_var *id, intmax_t n);
 void	ft_uint_print(t_var *id, va_list args);
 char    *ft_spad_uint(t_var *id, char *str);
 void	ft_base_print(t_var *id, va_list args);

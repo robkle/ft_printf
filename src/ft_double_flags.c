@@ -6,14 +6,14 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 12:16:05 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/24 11:53:58 by rklein           ###   ########.fr       */
+/*   Updated: 2020/01/31 17:51:21 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "printf.h"
 
-static char	*ft_zeropad(t_var *id, char *str, int size)
+/*static char	*ft_zeropad(t_var *id, int size)
 {
 	char	*z_pad;
 	char	*tmp;
@@ -41,7 +41,7 @@ static char	*ft_zeropad(t_var *id, char *str, int size)
 	}
 }
 
-/*char	*ft_spacepad(t_var *id, char *str)
+static char	*ft_spacepad(t_var *id, char *str)
 {
 	char	*s_pad;
 	char	*tmp;
@@ -53,15 +53,28 @@ static char	*ft_zeropad(t_var *id, char *str, int size)
 		tmp = ft_strjoin(s_pad, str);
 	free(s_pad);
 	return (tmp);
-}*/ // DELETE THIS WHOLE FUNCTION IF IDENTICAL TO THE ONE IN THE INT_FLAG FILE
+}*/
 
 char	*ft_double_flags(t_var *id, char *str)
 {
-	char	*tmp;
-	int		plus;
+	char	*tmp[4];
 	int		size;
 
-	plus = ((ft_strchr_int(id->flags, '+') || ft_strchr_int(id->flags, ' ')) && ft_atoi(str) >= 0) ? 1 : 0;
+	size = ft_strlen(str);
+	if ((id->sign == '-' || ft_strchr_int(id->flags, '+') || ft_strchr_int(id->flags, ' ')) &&
+			ft_strchr_int(id->flags, '0'))
+		size++;
+	tmp[0] = (ft_strchr_int(id->flags, '0') && !ft_strchr_int(id->flags, '-')) ?
+		ft_strmake('0', ft_atoi(id->fld_min) - size) : ft_strnew(0);
+	tmp[1] = ft_strjoin(tmp[0], str);
+	free(tmp[0]);
+	free(str);
+	tmp[2] = ft_addsign(id, tmp[1]);
+	tmp[3] = (!ft_strchr_int(id->flags, '0')) ? ft_spacepad(id, tmp[2]) : tmp[2];
+	return(tmp[3]);
+}
+
+/*	sign = ((ft_strchr_int(id->flags, '+') || ft_strchr_int(id->flags, ' ')) && ft_atoi(str) >= 0) ? 1 : 0;
 	size = ft_atoi(id->fld_min) - ft_strlen(str);
 	if (ft_strchr_int(id->flags, '0') && size > 0)
 	{
@@ -69,7 +82,7 @@ char	*ft_double_flags(t_var *id, char *str)
 		free(str);
 		str = tmp;
 	}
-	if (plus)
+	if (sign)
 	{
 		if (ft_strchr_int(id->flags, '+'))
 			tmp = ft_strjoin("+", str);
@@ -85,5 +98,5 @@ char	*ft_double_flags(t_var *id, char *str)
 		str = tmp;	
 	}
 	return (str);
-}
+}*/
 
