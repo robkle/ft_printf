@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 10:17:06 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/30 12:21:54 by rklein           ###   ########.fr       */
+/*   Updated: 2020/02/03 14:51:31 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*ft_itoa_base(uintmax_t value, int base)
 	char		*str;
 	uintmax_t	tmp;
 	int			len;
-	
+
 	base_char = "0123456789abcdef";
 	tmp = value;
 	len = 1;
@@ -35,7 +35,7 @@ static char	*ft_itoa_base(uintmax_t value, int base)
 	return (str);
 }
 
-void	ft_addr_print(t_var *id, va_list args)
+void		ft_addr_print(t_var *id, va_list args)
 {
 	void		*ar;
 	uintmax_t	value;
@@ -61,7 +61,7 @@ void	ft_addr_print(t_var *id, va_list args)
 	free(str[1]);
 }
 
-char	*ft_base(uintmax_t value, t_var *id)
+char		*ft_base(uintmax_t value, t_var *id)
 {
 	char	*str;
 	int		i;
@@ -75,8 +75,8 @@ char	*ft_base(uintmax_t value, t_var *id)
 	else if (id->type == 'x' || id->type == 'X')
 	{
 		str = ft_itoa_base(value, 16);
-		if (id->type == 'X') 
-		{	
+		if (id->type == 'X')
+		{
 			i = -1;
 			while (str[++i])
 				str[i] = ft_toupper(str[i]);

@@ -6,17 +6,16 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 12:34:56 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/24 17:10:10 by rklein           ###   ########.fr       */
+/*   Updated: 2020/02/03 15:05:02 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
-#include <stdio.h>
 
 static void	ft_char(t_var *id, char c)
 {
 	char	*spad;
-	
+
 	spad = ft_strmake(' ', ft_atoi(id->fld_min) - 1);
 	if (ft_strchr_int(id->flags, '-'))
 	{
@@ -34,25 +33,24 @@ static void	ft_char(t_var *id, char c)
 
 static char	*ft_str_flags(t_var *id, char *str)
 {
-	char *tmp;
-	
+	char	*tmp;
+
 	if (id->type == 's')
 	{
 		if (id->dot)
 		{
 			tmp = ft_strsub(str, 0, ft_atoi(id->prec));
-			free(str);
-			str = tmp;
 		}
 	}
 	if ((size_t)ft_atoi(id->fld_min) > ft_strlen(str))
 		tmp = ft_spacepad(id, str);
 	else
 		tmp = ft_strdup(str);
+	free(str);
 	return (tmp);
 }
 
-void	ft_char_print(t_var *id, va_list args)
+void		ft_char_print(t_var *id, va_list args)
 {
 	char	c;
 	char	*tmp;

@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_g_print.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rklein <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/03 15:40:29 by rklein            #+#    #+#             */
+/*   Updated: 2020/02/03 15:52:22 by rklein           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "printf.h"
-#include <stdio.h>
 
 static int	ft_sdigits(int n)
 {
@@ -32,13 +43,14 @@ static char	*ft_cut_zero(char *str)
 
 static char	*ft_enum_g(t_var *id, long double f, int pr)
 {
-	int	e;
+	int		e;
 	char	sign;
 	char	*str[4];
-	
+
 	sign = ((f < 1.0 && f > 0.0) || (f > -1.0 && f < 0.0)) ? '-' : '+';
-		e = 0;
-	while ((f > 0 && !(f < 10.0 && f >= 1.0)) || (f < 0 && !(f > -10.0 && f <= -1.0)))
+	e = 0;
+	while ((f > 0 && !(f < 10.0 && f >= 1.0)) ||
+			(f < 0 && !(f > -10.0 && f <= -1.0)))
 	{
 		if ((f < 1.0 && f > 0.0) || (f > -1.0 && f < 0.0))
 			f = f * 10;
@@ -47,10 +59,8 @@ static char	*ft_enum_g(t_var *id, long double f, int pr)
 		e++;
 	}
 	str[0] = ft_ftoa(id, f, pr);
-	if (pr == 0 && ft_strchr_int(id->flags, '#'))
-		str[1] = ft_strjoin(str[0], ".");
-	else
-		str[1] = ft_cut_zero(str[0]);
+	str[1] = pr == 0 && ft_strchr_int(id->flags, '#') ? ft_strjoin(str[0], ".")
+		: ft_cut_zero(str[0]);
 	free(str[0]);
 	str[2] = ft_suffix(id->type, sign, e);
 	str[3] = ft_strjoin(str[1], str[2]);
@@ -61,8 +71,8 @@ static char	*ft_enum_g(t_var *id, long double f, int pr)
 
 static char	*ft_g_direct(t_var *id, long double fl)
 {
-	int	pr;
-	int	sn;
+	int		pr;
+	int		sn;
 	char	*str[3];
 
 	pr = 6;
@@ -78,7 +88,8 @@ static char	*ft_g_direct(t_var *id, long double fl)
 		else
 			str[2] = ft_cut_zero(str[1]);
 		free(str[1]);
-		str[1] = ft_strlen(str[0]) < ft_strlen(str[2]) ? ft_strdup(str[0]) : ft_strdup(str[2]);
+		str[1] = ft_strlen(str[0]) < ft_strlen(str[2]) ? ft_strdup(str[0])
+			: ft_strdup(str[2]);
 		free(str[2]);
 	}
 	else
@@ -87,13 +98,13 @@ static char	*ft_g_direct(t_var *id, long double fl)
 	return (str[1]);
 }
 
-void	ft_g_print(t_var *id, va_list args)
+void		ft_g_print(t_var *id, va_list args)
 {
 	double		d;
 	long double	ld;
 	char		*str[2];
 
-	if (ft_strcmp (id->type_spec, "L") == 0)
+	if (ft_strcmp(id->type_spec, "L") == 0)
 	{
 		ld = va_arg(args, long double);
 		str[0] = ft_g_direct(id, ld);

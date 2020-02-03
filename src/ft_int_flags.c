@@ -6,10 +6,9 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 12:16:05 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/31 17:51:23 by rklein           ###   ########.fr       */
+/*   Updated: 2020/02/03 16:21:17 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "printf.h"
 
@@ -21,35 +20,14 @@ static char	*ft_zeropad(t_var *id, int size)
 	if (id->dot)
 		return (ft_strmake('0', ft_atoi(id->prec) - size));
 	return (ft_strnew(0));
-	
-	/*if (ft_atoi(str) >= 0)
-	{
-		if (ft_strchr_int(id->flags, '+') || ft_strchr_int(id->flags, ' '))
-		{
-			if (size - 1 <= 0)
-				return (str);
-			z_pad = ft_strmake('0', (ft_atoi(id->fld_min) - (ft_strlen(str) + 1)));
-		}
-		else
-			z_pad = ft_strmake('0', (ft_atoi(id->fld_min) - (ft_strlen(str))));  
-		tmp = ft_strjoin(z_pad, str);
-		free(z_pad);
-		return (tmp);
-	}
-	else
-	{
-		z_pad = ft_strmake('0', (ft_atoi(id->fld_min) - (ft_strlen(str))));
-		tmp = ft_strjoin(z_pad, str);
-		free(z_pad);
-		return (ft_strjoin("-", tmp));
-	}*/
 }
 
-char	*ft_addsign(t_var *id, char *str)
+char		*ft_addsign(t_var *id, char *str)
 {
 	char *sstr;
+
 	if (id->sign == '-')
-	   sstr = ft_strjoin("-", str);
+		sstr = ft_strjoin("-", str);
 	else if (id->sign == '+' && (ft_strchr_int(id->flags, '+')))
 		sstr = ft_strjoin("+", str);
 	else if (id->sign == '+' && (ft_strchr_int(id->flags, ' ')))
@@ -60,7 +38,7 @@ char	*ft_addsign(t_var *id, char *str)
 	return (sstr);
 }
 
-char	*ft_spacepad(t_var *id, char *str)
+char		*ft_spacepad(t_var *id, char *str)
 {
 	char	*s_pad;
 	char	*tmp;
@@ -78,7 +56,7 @@ static char	*ft_int_spad(t_var *id, char *str)
 {
 	char	*spad;
 
-	if ((ft_strchr_int(id->flags, '-') || id->dot) && 
+	if ((ft_strchr_int(id->flags, '-') || id->dot) &&
 			(size_t)ft_atoi(id->fld_min) > ft_strlen(str))
 		spad = ft_spacepad(id, str);
 	else if (ft_strchr_int(id->flags, '0') == 0 &&
@@ -90,10 +68,11 @@ static char	*ft_int_spad(t_var *id, char *str)
 	return (spad);
 }
 
-char	*ft_int_flags(t_var *id, char *str)
+char		*ft_int_flags(t_var *id, char *str)
 {
 	char	*tmp[4];
 	int		size;
+	int		sn;
 
 	if (ft_atoi(str) == 0 && id->dot && ft_strchr_int(id->prec, '0'))
 	{
@@ -103,8 +82,9 @@ char	*ft_int_flags(t_var *id, char *str)
 	else
 	{
 		size = ft_strlen(str);
-		if (id->type != 'u' && !id->dot && (id->sign == '-' || ft_strchr_int(id->flags, '+') || 
-					ft_strchr_int(id->flags, ' ')) && ft_strchr_int(id->flags, '0'))
+		sn = id->sign == '-' || ft_strchr_int(id->flags, '+') ||
+			ft_strchr_int(id->flags, ' ') ? 1 : 0;
+		if (id->type != 'u' && !id->dot && sn && ft_strchr_int(id->flags, '0'))
 			size++;
 		tmp[0] = ft_zeropad(id, size);
 		tmp[1] = ft_strjoin(tmp[0], str);
@@ -113,35 +93,5 @@ char	*ft_int_flags(t_var *id, char *str)
 	}
 	tmp[2] = ft_addsign(id, tmp[1]);
 	tmp[3] = ft_int_spad(id, tmp[2]);
-	return(tmp[3]);
+	return (tmp[3]);
 }
-				
-	/*char	*tmp;
-	int		plus;
-	int		size;
-
-	plus = ((ft_strchr_int(id->flags, '+') || ft_strchr_int(id->flags, ' ')) && ft_atoi(str) >= 0) ? 1 : 0;
-	size = ft_atoi(id->fld_min) - ft_strlen(str);
-	if (ft_strchr_int(id->flags, '0') && size > 0)
-	{
-		tmp = ft_zeropad(id, str, size);
-		free(str);
-		str = tmp;
-	}
-	if (plus)
-	{
-		if (ft_strchr_int(id->flags, '+'))
-			tmp = ft_strjoin("+", str);
-		else
-			tmp = ft_strjoin(" ", str);
-		free(str);
-		str = tmp;
-	}
-	if (ft_strchr_int(id->flags, '0') == 0 && (size_t)ft_atoi(id->fld_min) > ft_strlen(str))
-	{
-		tmp = ft_spacepad(id, str);
-		free(str);
-		str = tmp;	
-	}
-	return (str);*/
-
