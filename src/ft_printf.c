@@ -6,70 +6,53 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 10:04:08 by rklein            #+#    #+#             */
-/*   Updated: 2020/02/03 16:45:58 by rklein           ###   ########.fr       */
+/*   Updated: 2020/02/04 15:07:25 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
+static int		ft_valid_type(t_var *id, const char *str, int i)
+{
+	id->type = str[i++];
+	if (id->type >= 'b' && id->type <= 'g')
+		return (i);
+	if (ft_toupper(id->type) == 'E' || ft_toupper(id->type) == 'G' ||
+			ft_toupper(id->type) == 'X')
+		return (i);
+	if (id->type == 'i' || id->type == 'o' || id->type == 'p' ||
+			id->type == 's' || id->type == 'u' || id->type == '%')
+		return (i);
+	return (0);
+}
+
 static int		ft_read_id(t_var *id, const char *str)
 {
-	int	i;
-	int	x;
+	int	i[2];
 
-	i = 0;
-	x = 0;
-	while (str[i] && (str[i] == '#' || str[i] == '0' || str[i] == ' ' ||
-			str[i] == '-' || str[i] == '+'))
-		id->flags[x++] = str[i++];
-	x = 0;
-	while (str[i] && ft_isdigit(str[i]))
-		id->fld_min[x++] = str[i++];
-	if (str[i] == '.')
+	i[0] = 0;
+	i[1] = 0;
+	while (str[i[0]] && ft_is_flag(str[i[0]]) == 1)
+		id->flags[i[1]++] = str[i[0]++];
+	i[1] = 0;
+	while (str[i[0]] && ft_isdigit(str[i[0]]))
+		id->fld_min[i[1]++] = str[i[0]++];
+	if (str[i[0]] == '.')
 	{
 		id->dot = 1;
-		i++;
+		i[0]++;
 	}
-	x = 0;
-	while (str[i] && ft_isdigit(str[i]))
-		id->prec[x++] = str[i++];
-	x = 0;
-	if (str[i] && (str[i] == 'l' || str[i] == 'h' || str[i] == 'L'))
+	i[1] = 0;
+	while (str[i[0]] && ft_isdigit(str[i[0]]))
+		id->prec[i[1]++] = str[i[0]++];
+	i[1] = 0;
+	if (str[i[0]] && (str[i[0]] == 'l' || str[i[0]] == 'h' || str[i[0]] == 'L'))
 	{
-		id->type_spec[x++] = str[i++];
-		if (str[i] && str[i] == str[i - 1] && str[i] != 'L')
-			id->type_spec[x++] = str[i++];
+		id->type_spec[i[1]++] = str[i[0]++];
+		if (str[i[0]] && str[i[0]] == str[i[0] - 1] && str[i[0]] != 'L')
+			id->type_spec[i[1]++] = str[i[0]++];
 	}
-	id->type = str[i++];
-	if (!ft_valid_type(id->type))
-		return (0);
-	return (i);
-}
-
-static t_var	*ft_idalloc(void)
-{
-	t_var	*id;
-
-	if (!(id = malloc(sizeof(t_var))))
-		return (NULL);
-	id->count = 0;
-	id->flags = ft_strnew(6);
-	id->fld_min = ft_strnew(11);
-	id->prec = ft_strnew(3);
-	id->type_spec = ft_strnew(3);
-	return (id);
-}
-
-static void		ft_reset(t_var *id)
-{
-	id->sign = '+';
-	ft_strclr(id->flags);
-	ft_strclr(id->fld_min);
-	id->dot = 0;
-	ft_strclr(id->prec);
-	id->prec[0] = '0';
-	ft_strclr(id->type_spec);
-	id->type = 0;
+	return (ft_valid_type(id, str, i[0]));
 }
 
 static void		ft_direct(t_var *id, va_list args)

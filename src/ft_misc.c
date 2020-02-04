@@ -6,13 +6,13 @@
 /*   By: rklein <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 14:19:50 by rklein            #+#    #+#             */
-/*   Updated: 2020/02/03 16:46:31 by rklein           ###   ########.fr       */
+/*   Updated: 2020/02/04 15:13:10 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-int		ft_strchr_int(char *s, int c)
+int			ft_strchr_int(char *s, int c)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ int		ft_strchr_int(char *s, int c)
 		return (0);
 }
 
-char	*ft_strmake(char c, int size)
+char		*ft_strmake(char c, int size)
 {
 	char	*s;
 	int		i;
@@ -44,26 +44,9 @@ char	*ft_strmake(char c, int size)
 	return (s);
 }
 
-static int  ft_valid_type(char c)
+int			ft_is_flag(char c)
 {
-	if (c >= 'b' && c <= 'g')
-		return (1);
-	if (ft_toupper(c) == 'E' || ft_toupper(c) == 'G' || ft_toupper(c) == 'X')
-		return (1);
-	if (c == 'i' || c == 'o' || c == 'p' || c == 's' || c == 'u' || c == '%')
+	if (c == '#' || c == '0' || c == ' ' || c == '-' || c == '+')
 		return (1);
 	return (0);
-}
-
-int		ft_free_id(t_var *id)
-{
-	int	count;
-
-	count = id->count;
-	free(id->flags);
-	free(id->fld_min);
-	free(id->prec);
-	free(id->type_spec);
-	free(id);
-	return (count);
 }

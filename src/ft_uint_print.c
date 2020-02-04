@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 10:17:22 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/30 11:13:01 by rklein           ###   ########.fr       */
+/*   Updated: 2020/02/04 13:03:12 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*ft_u_itoa(uintmax_t n)
 	return (str);
 }
 
-void	ft_uint_print(t_var *id, va_list args)
+void		ft_uint_print(t_var *id, va_list args)
 {
 	uintmax_t	value;
 	char		*str[2];
@@ -64,7 +64,8 @@ void	ft_uint_print(t_var *id, va_list args)
 	else
 		value = (unsigned int)va_arg(args, uintmax_t);
 	str[0] = (id->type == 'u') ? ft_u_itoa(value) : ft_base(value, id);
-	if (id->type == 'u' && value == 0 && id->dot && ft_strchr_int(id->prec, '0'))
+	if (id->type == 'u' && value == 0 && id->dot &&
+			ft_strchr_int(id->prec, '0'))
 		str[1] = ft_spad_uint(id, ft_strnew(0));
 	else
 		str[1] = ft_uint_flags(id, str[0]);

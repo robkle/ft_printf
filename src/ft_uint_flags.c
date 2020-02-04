@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 12:38:21 by rklein            #+#    #+#             */
-/*   Updated: 2020/01/30 15:05:25 by rklein           ###   ########.fr       */
+/*   Updated: 2020/02/04 13:00:07 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static char	*ft_b_prefix(t_var *id, char *str)
 		s = ft_strmake('0', 8 - ft_strlen(str));
 	else if (ft_strcmp(id->type_spec, "h") == 0)
 		s = ft_strmake('0', 16 - ft_strlen(str));
-	else if (ft_strcmp(id->type_spec, "l") == 0 || ft_strcmp(id->type_spec, "ll") == 0)
+	else if (ft_strcmp(id->type_spec, "l") == 0 ||
+			ft_strcmp(id->type_spec, "ll") == 0)
 		s = ft_strmake('0', 64 - ft_strlen(str));
 	else
 		s = ft_strmake('0', 32 - ft_strlen(str));
@@ -38,12 +39,12 @@ static char	*ft_prefix(t_var *id, char *str)
 		if (id->type == 'X')
 			return (ft_strdup("0X"));
 	}
-	if (id->type =='o' && !(ft_strlen(str) == 1 && str[0] == '0'))
-			return (ft_strdup("0"));
+	if (id->type == 'o' && !(ft_strlen(str) == 1 && str[0] == '0'))
+		return (ft_strdup("0"));
 	return (ft_strnew(0));
 }
 
-char	*ft_spad_uint(t_var *id, char *str)
+char		*ft_spad_uint(t_var *id, char *str)
 {
 	char	*tmp;
 
@@ -59,8 +60,8 @@ char	*ft_spad_uint(t_var *id, char *str)
 	return (tmp);
 }
 
-char	*ft_zpad_uint(t_var *id, int size)
-{	
+char		*ft_zpad_uint(t_var *id, int size)
+{
 	if (ft_strchr_int(id->flags, '0') && !ft_strchr_int(id->flags, '-')
 			&& !id->dot)
 		return (ft_strmake('0', ft_atoi(id->fld_min) - size));
@@ -73,12 +74,12 @@ char	*ft_zpad_uint(t_var *id, int size)
 	return (ft_strnew(0));
 }
 
-char	*ft_uint_flags(t_var *id, char *str)
+char		*ft_uint_flags(t_var *id, char *str)
 {
 	char	*tmp[3];
 	int		size;
 
-	size = ft_strlen(str); 
+	size = ft_strlen(str);
 	if (ft_strchr_int(id->flags, '#') && id->type != 'u')
 	{
 		tmp[0] = ft_prefix(id, str);
@@ -95,7 +96,7 @@ char	*ft_uint_flags(t_var *id, char *str)
 	if (ft_strchr_int(id->flags, '#') && id->type != 'u')
 	{
 		tmp[1] = ft_strjoin(tmp[0], str);
-		free (tmp[0]);
+		free(tmp[0]);
 		free(str);
 		str = tmp[1];
 	}

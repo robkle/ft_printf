@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 14:03:25 by rklein            #+#    #+#             */
-/*   Updated: 2020/02/03 15:24:03 by rklein           ###   ########.fr       */
+/*   Updated: 2020/02/04 15:45:19 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ char				*ft_ftoa(t_var *id, long double fl, int pr)
 	intmax_t	num;
 	int			i;
 
-	fl = ft_prep(id, fl, pr);
 	num = fl;
 	str[0] = ft_s_itoa(id, num);
 	if (pr == 0 && ft_strchr_int(id->flags, '#') == 0)
@@ -73,6 +72,7 @@ void				ft_double_print(t_var *id, va_list args)
 		ld = (long double)va_arg(args, long double);
 	else
 		ld = (long double)va_arg(args, double);
+	ld = ft_prep(id, ld, pr);
 	str[0] = ft_ftoa(id, ld, pr);
 	str[1] = ft_double_flags(id, str[0]);
 	ft_putstr(str[1]);

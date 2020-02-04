@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 12:34:56 by rklein            #+#    #+#             */
-/*   Updated: 2020/02/03 15:05:02 by rklein           ###   ########.fr       */
+/*   Updated: 2020/02/04 16:19:22 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static char	*ft_str_flags(t_var *id, char *str)
 		if (id->dot)
 		{
 			tmp = ft_strsub(str, 0, ft_atoi(id->prec));
+			free(str);
+			str = tmp;
 		}
 	}
 	if ((size_t)ft_atoi(id->fld_min) > ft_strlen(str))
