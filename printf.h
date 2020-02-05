@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 10:32:26 by rklein            #+#    #+#             */
-/*   Updated: 2020/02/04 16:25:42 by rklein           ###   ########.fr       */
+/*   Updated: 2020/02/05 14:50:40 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef	struct	s_var
 int				ft_printf(const char *format, ...);
 void			ft_double_print(t_var *id, va_list args);
 char			*ft_ftoa(t_var *id, long double fl, int pr);
+long double		ft_prep(t_var *id, long double fl, int pr);
 void			ft_int_print(t_var *id, va_list args);
 char			*ft_addsign(t_var *id, char *str);
 char			*ft_s_itoa(t_var *id, intmax_t n);
@@ -52,8 +53,10 @@ char			*ft_strmake(char c, int size);
 char			*ft_spacepad(t_var *id, char *str);
 char			*ft_uint_flags(t_var *id, char *str);
 void			ft_e_print(t_var *id, va_list args);
+char			*ft_enum(t_var *id, long double f);
 char			*ft_suffix(char type, char sign, int e);
 void			ft_g_print(t_var *id, va_list args);
+char			*ft_cut_zero(char *str);
 t_var			*ft_idalloc(void);
 void			ft_reset(t_var *id);
 void			ft_free_str(char **str, int s);

@@ -6,13 +6,13 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 14:03:25 by rklein            #+#    #+#             */
-/*   Updated: 2020/02/04 15:45:19 by rklein           ###   ########.fr       */
+/*   Updated: 2020/02/05 15:16:26 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-static long double	ft_prep(t_var *id, long double fl, int pr)
+long double	ft_prep(t_var *id, long double fl, int pr)
 {
 	long double	dec;
 	int			i;
@@ -30,7 +30,7 @@ static long double	ft_prep(t_var *id, long double fl, int pr)
 	return (fl);
 }
 
-char				*ft_ftoa(t_var *id, long double fl, int pr)
+char		*ft_ftoa(t_var *id, long double fl, int pr)
 {
 	char		*str[2];
 	char		buffer[1024];
@@ -59,7 +59,7 @@ char				*ft_ftoa(t_var *id, long double fl, int pr)
 	return (str[1]);
 }
 
-void				ft_double_print(t_var *id, va_list args)
+void		ft_double_print(t_var *id, va_list args)
 {
 	long double	ld;
 	int			pr;

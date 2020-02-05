@@ -6,7 +6,7 @@
 /*   By: rklein <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:40:29 by rklein            #+#    #+#             */
-/*   Updated: 2020/02/03 15:52:22 by rklein           ###   ########.fr       */
+/*   Updated: 2020/02/05 15:16:25 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_sdigits(int n)
 	return (i);
 }
 
-static char	*ft_cut_zero(char *str)
+char	*ft_cut_zero(char *str)
 {
 	int		i;
 	char	*tmp;
@@ -41,48 +41,20 @@ static char	*ft_cut_zero(char *str)
 	return (tmp);
 }
 
-static char	*ft_enum_g(t_var *id, long double f, int pr)
-{
-	int		e;
-	char	sign;
-	char	*str[4];
-
-	sign = ((f < 1.0 && f > 0.0) || (f > -1.0 && f < 0.0)) ? '-' : '+';
-	e = 0;
-	while ((f > 0 && !(f < 10.0 && f >= 1.0)) ||
-			(f < 0 && !(f > -10.0 && f <= -1.0)))
-	{
-		if ((f < 1.0 && f > 0.0) || (f > -1.0 && f < 0.0))
-			f = f * 10;
-		if (f >= 10.0 || f <= -10.0)
-			f = f / 10;
-		e++;
-	}
-	str[0] = ft_ftoa(id, f, pr);
-	str[1] = pr == 0 && ft_strchr_int(id->flags, '#') ? ft_strjoin(str[0], ".")
-		: ft_cut_zero(str[0]);
-	free(str[0]);
-	str[2] = ft_suffix(id->type, sign, e);
-	str[3] = ft_strjoin(str[1], str[2]);
-	free(str[1]);
-	free(str[2]);
-	return (str[3]);
-}
-
 static char	*ft_g_direct(t_var *id, long double fl)
 {
 	int		pr;
-	int		sn;
 	char	*str[3];
 
-	pr = 6;
-	if (id->dot)
-		pr = ft_atoi(id->prec);
-	str[0] = (pr == 0) ? ft_enum_g(id, fl, pr) : ft_enum_g(id, fl, pr - 1);
-	sn = pr - ft_sdigits(fl);
+	str[0] = ft_enum(id, fl);
+	ft_printf("after enum: $%s$\n", str[0]);
+	pr = id->dot ? ft_atoi(id->prec) : 6;
+	fl = ft_prep(id, fl, pr);
+	pr = pr - ft_sdigits(fl);
 	if (sn >= 0)
 	{
 		str[1] = ft_ftoa(id, fl, sn);
+		ft_printf("after ftoa: $%s$\n", str[1]);
 		if (sn == 0 && ft_strchr_int(id->flags, '#'))
 			str[2] = ft_strjoin(str[1], ".");
 		else
@@ -100,19 +72,18 @@ static char	*ft_g_direct(t_var *id, long double fl)
 
 void		ft_g_print(t_var *id, va_list args)
 {
-	double		d;
 	long double	ld;
 	char		*str[2];
 
 	if (ft_strcmp(id->type_spec, "L") == 0)
 	{
-		ld = va_arg(args, long double);
+		ld = (long double)va_arg(args, long double);
 		str[0] = ft_g_direct(id, ld);
 	}
 	else
 	{
-		d = va_arg(args, double);
-		str[0] = ft_g_direct(id, d);
+		ld = (long double)va_arg(args, double);
+		str[0] = ft_g_direct(id, ld);
 	}
 	str[1] = ft_double_flags(id, str[0]);
 	ft_putstr(str[1]);

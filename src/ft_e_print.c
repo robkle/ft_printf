@@ -6,12 +6,12 @@
 /*   By: rklein <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:28:41 by rklein            #+#    #+#             */
-/*   Updated: 2020/02/03 15:37:16 by rklein           ###   ########.fr       */
+/*   Updated: 2020/02/05 15:16:28 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
-
+#include <stdio.h>
 char				*ft_suffix(char type, char sign, int e)
 {
 	char	*str;
@@ -27,6 +27,7 @@ char				*ft_suffix(char type, char sign, int e)
 
 static long double	ft_epower(long double f, int *e)
 {
+	int	i;
 	while ((f > 0 && !(f < 10.0 && f >= 1.0)) ||
 			(f < 0 && !(f > -10.0 && f <= -1.0)))
 	{
@@ -36,27 +37,38 @@ static long double	ft_epower(long double f, int *e)
 			f = f / 10;
 		*e = *e + 1;
 	}
+	i = f > 0 ? f + 0.5 : f - 0.5;
+	if (i >= 10 || i <= -10)
+	{
+		f = f / 10;
+		*e = *e - 1;
+		if (*e == 0)
+		{
+			f = f * 10;
+			*e = *e + 1;
+		}
+	}
 	return (f);
 }
 
-static char			*ft_enum(t_var *id, long double f)
+char			*ft_enum(t_var *id, long double f)
 {
 	int		e;
 	int		pr;
 	char	sign;
 	char	*str[4];
 
-	pr = 6;
-	if (id->dot)
-		pr = ft_atoi(id->prec);
+	pr = id->dot == 1 ? ft_atoi(id->prec) : 6;
+	pr = ft_toupper(id->type) == 'G' && pr > 0 ? pr - 1 : pr; 
 	sign = ((f < 1.0 && f > 0.0) || (f > -1.0 && f < 0.0)) ? '-' : '+';
 	e = 0;
 	f = ft_epower(f, &e);
+	f = ft_prep(id, f, pr);
 	str[0] = ft_ftoa(id, f, pr);
 	if (pr == 0 && ft_strchr_int(id->flags, '#'))
 		str[1] = ft_strjoin(str[0], ".");
 	else
-		str[1] = ft_strdup(str[0]);
+		str[1] = ft_toupper(id->type) == 'G' ? ft_cut_zero(str[0]) : ft_strdup(str[0]);
 	free(str[0]);
 	str[2] = ft_suffix(id->type, sign, e);
 	str[3] = ft_strjoin(str[1], str[2]);
@@ -67,19 +79,18 @@ static char			*ft_enum(t_var *id, long double f)
 
 void				ft_e_print(t_var *id, va_list args)
 {
-	double		d;
 	long double	ld;
 	char		*str[2];
 
 	if (ft_strcmp(id->type_spec, "L") == 0)
 	{
-		ld = va_arg(args, long double);
+		ld = (long double)va_arg(args, long double);
 		str[0] = ft_enum(id, ld);
 	}
 	else
 	{
-		d = va_arg(args, double);
-		str[0] = ft_enum(id, d);
+		ld =(long double)va_arg(args, double);
+		str[0] = ft_enum(id, ld);
 	}
 	str[1] = ft_double_flags(id, str[0]);
 	ft_putstr(str[1]);
