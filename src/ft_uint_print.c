@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 10:17:22 by rklein            #+#    #+#             */
-/*   Updated: 2020/02/04 13:03:12 by rklein           ###   ########.fr       */
+/*   Updated: 2020/02/06 12:35:24 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ void		ft_uint_print(t_var *id, va_list args)
 	str[0] = (id->type == 'u') ? ft_u_itoa(value) : ft_base(value, id);
 	if (id->type == 'u' && value == 0 && id->dot &&
 			ft_strchr_int(id->prec, '0'))
+	{
 		str[1] = ft_spad_uint(id, ft_strnew(0));
+		free(str[0]);
+	}
 	else
 		str[1] = ft_uint_flags(id, str[0]);
 	ft_putstr(str[1]);

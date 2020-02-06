@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 10:32:26 by rklein            #+#    #+#             */
-/*   Updated: 2020/02/05 14:50:40 by rklein           ###   ########.fr       */
+/*   Updated: 2020/02/06 11:04:06 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,17 @@
 # include <inttypes.h>
 # include <stdbool.h>
 # include <limits.h>
+# include <stdio.h>
+
+# define BLACK			"\033[30m"
+# define RED 			"\033[31m"
+# define GREEN 			"\033[32m"
+# define YELLOW 		"\033[33m"
+# define BLUE 			"\033[34m"
+# define MAGENTA 		"\033[35m"
+# define CYAN 			"\033[36m"
+# define WHITE			"\033[37m"
+# define EOC 			"\033[0m"
 
 typedef	struct	s_var
 {

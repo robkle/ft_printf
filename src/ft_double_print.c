@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 14:03:25 by rklein            #+#    #+#             */
-/*   Updated: 2020/02/05 15:16:26 by rklein           ###   ########.fr       */
+/*   Updated: 2020/02/06 12:35:19 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void		ft_double_print(t_var *id, va_list args)
 	ld = ft_prep(id, ld, pr);
 	str[0] = ft_ftoa(id, ld, pr);
 	str[1] = ft_double_flags(id, str[0]);
+	free(str[0]);
 	ft_putstr(str[1]);
 	id->count += ft_strlen(str[1]);
 	free(str[1]);
