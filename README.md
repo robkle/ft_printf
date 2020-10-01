@@ -12,3 +12,18 @@ This is a simplified version of the C library function *printf* that can handle:
 * #, 0, -, +,  and space flags<br />
 * minimum field width<br />
 * precision<br />
+### Usage
+#include "printf.h"<br />
+<br />
+int ft_printf(const char \*format, ...);<br />
+<br />
+Repository contains a Makefile for:<br /> 
+* compiling (**make all**)<br />
+* removing object files (**make clean**)<br />
+* deleting library file (**make fclean**)<br />
+* recompiling (**make re**)<br />
+
+#### Note:
+This project is part of my studies at Hive Helsinki. 
+It was tested by 3 fellow Hive students as well as an automated evaluation system.
+
