@@ -9,11 +9,12 @@ This is a simplified version of the C library function *printf* that can handle:
 * e and g conversions<br />
 * b (binary) conversion (non-existent in real printf)<br />
 * %%<br />
-* '#'0-+ and space flags<br />
+* # #
+0-+ and space flags<br />
 * minimum field width<br />
 * precision<br />
 <br />
-## Usage<br />
+## Usage
 \#include "printf.h"<br />
 <br />
 int ft_printf(const char \*format, ...);<br />
