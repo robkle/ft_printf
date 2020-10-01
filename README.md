@@ -8,15 +8,14 @@ This is a simplified version of the C library function *printf* that can handle:
 * f conversion with l and L length modifiers<br />
 * e and g conversions<br />
 * b (binary) conversion (non-existent in real printf)<br />
-* %%<br />
-* \#0-+ and space flags<br />
+* '%%'<br />
+* '#','0', '-', '+' and space flags<br />
 * minimum field width<br />
 * precision<br />
 <br />
 ### Usage
-#include "libft.h"<br />
-<br />
-int ft_printf(const char format, ...);<br />
+\#include "libft.h"<br />
+int ft_printf(const char \*format, ...);<br />
 <br />
 Repository contains a Makefile for:<br /> 
 * compiling executable (**make all**)<br />
