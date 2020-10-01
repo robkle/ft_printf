@@ -14,9 +14,9 @@ This is a simplified version of the C library function *printf* that can handle:
 * precision<br />
 <br />
 ### Usage
-include "printf.h"<br />
+#include "libft.h"<br />
 <br />
-int ft_printf(const char \*format, ...);<br />
+int ft_printf(const char format, ...);<br />
 <br />
 Repository contains a Makefile for:<br /> 
 * compiling executable (**make all**)<br />
