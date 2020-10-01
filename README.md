@@ -13,7 +13,7 @@ This is a simplified version of the C library function *printf* that can handle:
 * minimum field width<br />
 * precision<br />
 <br />
-## Usage
+## Usage<br />
 \#include "printf.h"<br />
 <br />
 int ft_printf(const char \*format, ...);<br />
